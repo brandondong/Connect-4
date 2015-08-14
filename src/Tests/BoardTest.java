@@ -32,4 +32,18 @@ public class BoardTest {
         assertEquals(test.getDiscAt(1, 1), Disc.RED);
     }
 
+    @Test
+    public void testIsOver() {
+        assertFalse(test.isOver());
+        test.makeMove(2);
+        assertFalse(test.isOver());
+        test.makeMove(3);
+        test.makeMove(2);
+        test.makeMove(3);
+        test.makeMove(2);
+        test.makeMove(3);
+        test.makeMove(2);
+        assertTrue(test.isOver());
+    }
+
 }

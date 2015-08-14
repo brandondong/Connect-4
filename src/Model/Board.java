@@ -43,6 +43,49 @@ public class Board {
         }
     }
 
+    // Effects: returns true if the board is won
+    public boolean isOver() {
+        for (int i = 0; i < 7; i++) {
+            for (int j = 0; j < 6; j++) {
+                if (canConnect(i, j)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    // Effects: returns true if a four disc connection can be made from the given position
+    private boolean canConnect(int x, int y) {
+        Disc color = discs[x][y];
+        if (color == null) {
+            return false;
+        }
+
+        if (x >= 3) {
+            if (color.equals(discs[x - 1][y]) && color.equals(discs[x - 2][y]) && color.equals(discs[x - 3][y])) {
+                return true;
+            }
+        }
+        if (x <= 4) {
+            if (color.equals(discs[x + 1][y]) && color.equals(discs[x + 2][y]) && color.equals(discs[x + 3][y])) {
+                return true;
+            }
+        }
+        if (y <= 2) {
+            if (color.equals(discs[x][y + 1]) && color.equals(discs[x][y + 2]) && color.equals(discs[x][y + 3])) {
+                return true;
+            }
+        }
+        if (y >= 3) {
+            if (color.equals(discs[x][y - 1]) && color.equals(discs[x][y - 2]) && color.equals(discs[x][y - 3])) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public Disc[][] getDiscs() {
         return discs;
     }
