@@ -1,5 +1,8 @@
 package Model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Created by Brandon on 2015-08-12.
  */
@@ -11,6 +14,11 @@ public class Board {
     public Board() {
         turn = Disc.YELLOW;
         discs = new Disc[7][6];
+    }
+
+    public Board(Disc[][] discs, Disc turn) {
+        this.discs = discs;
+        this.turn = turn;
     }
 
     // Requires: (x,y) coordinate is within board
@@ -43,6 +51,18 @@ public class Board {
         }
     }
 
+    // Effects: returns a set of boards representing the next possible states from the current
+    public Set<Board> nextMove() {
+        Set<Board> moves = new HashSet<>();
+        for (int i = 0; i < 7; i++) {
+            Board move = new Board(discs.clone(), turn);
+            if (move.makeMove(i)) {
+                moves.add(move);
+            }
+        }
+        return moves;
+    }
+
     // Effects: returns true if the board is won
     public boolean isOver() {
         for (int i = 0; i < 7; i++) {
@@ -66,10 +86,30 @@ public class Board {
             if (color.equals(discs[x - 1][y]) && color.equals(discs[x - 2][y]) && color.equals(discs[x - 3][y])) {
                 return true;
             }
+            if (y <= 2) {
+                if (color.equals(discs[x - 1][y + 1]) && color.equals(discs[x - 2][y + 2]) && color.equals(discs[x - 3][y + 3])) {
+                    return true;
+                }
+            }
+            if (y >= 3) {
+                if (color.equals(discs[x - 1][y - 1]) && color.equals(discs[x - 2][y - 2]) && color.equals(discs[x - 3][y - 3])) {
+                    return true;
+                }
+            }
         }
         if (x <= 4) {
             if (color.equals(discs[x + 1][y]) && color.equals(discs[x + 2][y]) && color.equals(discs[x + 3][y])) {
                 return true;
+            }
+            if (y <= 2) {
+                if (color.equals(discs[x + 1][y + 1]) && color.equals(discs[x + 2][y + 2]) && color.equals(discs[x + 3][y + 3])) {
+                    return true;
+                }
+            }
+            if (y >= 3) {
+                if (color.equals(discs[x + 1][y - 1]) && color.equals(discs[x + 2][y - 2]) && color.equals(discs[x + 3][y - 3])) {
+                    return true;
+                }
             }
         }
         if (y <= 2) {

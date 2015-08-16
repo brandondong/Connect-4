@@ -46,4 +46,13 @@ public class BoardTest {
         assertTrue(test.isOver());
     }
 
+    @Test
+    public void testNextMove() {
+        assertEquals(7, test.nextMove().size());
+        for (int i = 0; i < 6; i++) {
+            test.makeMove(0);
+        }
+        assertEquals(6, test.nextMove().size());
+    }
+
 }
