@@ -28,6 +28,7 @@ public class BoardTest {
     public void testMakeMove() {
         test.makeMove(1);
         assertEquals(test.getDiscAt(1, 0), Disc.YELLOW);
+        assertEquals(Disc.RED, test.getTurn());
         test.makeMove(1);
         assertEquals(test.getDiscAt(1, 1), Disc.RED);
     }
