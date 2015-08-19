@@ -88,9 +88,44 @@ public class Board {
         return value;
     }
 
+    // Effects: returns the value at the given position for yellow
     private int getValueAtPos(int x, int y) {
+        int value = 0;
         Disc color = discs[x][y];
         List<List<Disc>> moves = getMovesAt(x, y);
+
+        for (List<Disc> next : moves) {
+            value += getValueForFour(color, next);
+        }
+        return value;
+    }
+
+    private int getValueForFour(Disc color, List<Disc> discs) {
+        int numYellow = 0;
+        int numRed = 0;
+        discs.add(color);
+
+        for (Disc next : discs) {
+            if (Disc.RED.equals(next)) {
+                numRed++;
+            } else if (Disc.YELLOW.equals(next)){
+                numYellow++;
+            }
+        }
+
+        if (numYellow == 0) {
+            if (numRed == 3) {
+                return -3;
+            } else if (numRed == 2) {
+                return -1;
+            }
+        } else if (numRed == 0) {
+            if (numYellow == 3) {
+                return 3;
+            } else if (numYellow == 2) {
+                return 1;
+            }
+        }
         return 0;
     }
 
