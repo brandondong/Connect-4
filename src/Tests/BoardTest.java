@@ -56,16 +56,4 @@ public class BoardTest {
         assertEquals(6, test.nextMove().size());
     }
 
-    @Test
-    public void testGetValue() {
-        test.makeMove(3);
-        assertEquals(0, test.getValueForYellow());
-        test.makeMove(4);
-        assertEquals(0, test.getValueForYellow());
-        test.makeMove(3);
-        assertEquals(1, test.getValueForYellow());
-        test.makeMove(3);
-        assertEquals(0, test.getValueForYellow());
-    }
-
 }
