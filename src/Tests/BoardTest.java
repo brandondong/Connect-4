@@ -5,6 +5,8 @@ import Model.Disc;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Set;
+
 import static org.junit.Assert.*;
 
 /**
@@ -49,11 +51,22 @@ public class BoardTest {
 
     @Test
     public void testNextMove() {
-        assertEquals(7, test.nextMove().size());
+        Set<Board> nextMoves = test.nextMove();
+        assertEquals(7, nextMoves.size());
+
         for (int i = 0; i < 6; i++) {
-            test.makeMove(0);
+            assertTrue(test.makeMove(0));
         }
         assertEquals(6, test.nextMove().size());
+        for (int i = 0; i < 6; i++) {
+            assertTrue(test.makeMove(1));
+        }
+        assertEquals(5, test.nextMove().size());
+    }
+
+    @Test
+    public void testGetValue() {
+        assertEquals(2, test.getYellowBoardValue());
     }
 
 }

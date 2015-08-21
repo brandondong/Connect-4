@@ -58,7 +58,14 @@ public class Board {
     public Set<Board> nextMove() {
         Set<Board> moves = new HashSet<>();
         for (int i = 0; i < 7; i++) {
-            Board move = new Board(discs.clone(), turn);
+
+            Disc[][] clone = new Disc[7][6];
+            for (int x = 0; x < 7; x++) {
+                for (int y = 0; y < 6; y++) {
+                    clone[x][y] = discs[x][y];
+                }
+            }
+            Board move = new Board(clone, turn);
             if (move.makeMove(i)) {
                 moves.add(move);
             }
@@ -91,15 +98,33 @@ public class Board {
                 return -1000;
             }
         }
-        Set<Board> next = board.nextMove();
-        if (next.isEmpty()) {
+        Set<Board> nextMoves = board.nextMove();
+        if (nextMoves.isEmpty()) {
             return 0;
         }
         if (depth == MAX_DEPTH) {
             return board.getValueForYellow();
         }
 
-        return 0;
+        if (board.getTurn().equals(Disc.YELLOW)) {
+            int bestvalue = -2000;
+            for (Board next: nextMoves) {
+                int value = minimax(next, depth + 1);
+                if (value > bestvalue) {
+                    bestvalue = value;
+                }
+            }
+            return bestvalue;
+        } else {
+            int bestvalue = 2000;
+            for (Board next: nextMoves) {
+                int value = minimax(next, depth + 1);
+                if (value < bestvalue) {
+                    bestvalue = value;
+                }
+            }
+            return bestvalue;
+        }
     }
 
     // Effects: returns the value of the board for yellow
