@@ -1,7 +1,10 @@
 package UI;
 
+import Model.Board;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Set;
 
 /**
  * Created by Brandon on 2015-08-16.
@@ -21,8 +24,28 @@ public class OnePlayerGame extends Game {
                 int x = e.getX() / SPACING;
                 if (board.makeMove(x) && board.isOver()) {
                     isGameOver = true;
+                    repaint();
+                    return;
+                }
+                Set<Board> nextMoves = board.nextMove();
+                if (nextMoves.isEmpty()) {
+                    isGameOver = true;
+                    return;
+                }
+
+                int bestValue = -2000;
+                for (Board next : nextMoves) {
+                    int value = next.getYellowBoardValue();
+                    if (value > bestValue) {
+                        board = next;
+                        bestValue = value;
+
+                    }
                 }
                 repaint();
+                if (board.isOver()) {
+                    isGameOver = true;
+                }
             }
         }
     }
