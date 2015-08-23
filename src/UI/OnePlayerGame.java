@@ -30,8 +30,11 @@ public class OnePlayerGame extends Game {
                 Set<Board> nextMoves = board.nextMove();
                 if (nextMoves.isEmpty()) {
                     isGameOver = true;
+                    repaint();
                     return;
                 }
+
+                paintComponent(getGraphics());
 
                 int bestValue = -2000;
                 for (Board next : nextMoves) {

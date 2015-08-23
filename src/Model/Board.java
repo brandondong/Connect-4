@@ -9,7 +9,7 @@ import java.util.Set;
  * Created by Brandon on 2015-08-12.
  */
 public class Board {
-    private static final int MAX_DEPTH = 4;
+    private static final int MAX_DEPTH = 5;
 
     private Disc[][] discs;
     private Disc turn;
