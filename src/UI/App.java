@@ -2,6 +2,8 @@ package UI;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Created by Brandon on 2015-08-16.
@@ -16,12 +18,27 @@ public class App extends JFrame {
         super("Connect 4");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setUndecorated(true);
+        add(new NewGameStarter());
         game = new OnePlayerGame();
-        add(game);
+        add(game, BorderLayout.NORTH);
 
         pack();
         centreOnScreen();
         setVisible(true);
+    }
+
+    public void updateSingle() {
+        remove(game);
+        game = new OnePlayerGame();
+        add(game, BorderLayout.NORTH);
+        validate();
+    }
+
+    public void updateDouble() {
+        remove(game);
+        game = new TwoPlayerGame();
+        add(game, BorderLayout.NORTH);
+        validate();
     }
 
     // Modifies: this
@@ -35,6 +52,23 @@ public class App extends JFrame {
 
         public NewGameStarter() {
             setBackground(Color.LIGHT_GRAY);
+            JButton singleGame = new JButton("New Singleplayer Game");
+            JButton doubleGame = new JButton("New Multiplayer Game");
+            singleGame.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    updateSingle();
+                }
+            });
+            doubleGame.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    updateDouble();
+                }
+            });
+
+            add(singleGame);
+            add(doubleGame);
         }
     }
 
