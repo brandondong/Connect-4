@@ -93,9 +93,9 @@ public class Board {
     private int minimax(Board board, int depth) {
         if (board.isOver()) {
             if (board.getTurn().equals(Disc.RED)) {
-                return 1000;
+                return 1000 - depth;
             } else {
-                return -1000;
+                return -1000 + depth;
             }
         }
         Set<Board> nextMoves = board.nextMove();
