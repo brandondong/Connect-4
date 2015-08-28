@@ -9,7 +9,7 @@ import java.util.Set;
  * Created by Brandon on 2015-08-12.
  */
 public class Board {
-    private static final int MAX_DEPTH = 5;
+    private static final int MAX_DEPTH = 6;
 
     private Disc[][] discs;
     private Disc turn;
@@ -87,10 +87,10 @@ public class Board {
 
     // Effects: returns the value of the board for yellow considering future moves
     public int getYellowBoardValue() {
-        return minimax(this, 0);
+        return minimax(this, 0, -2000, 2000);
     }
 
-    private int minimax(Board board, int depth) {
+    private int minimax(Board board, int depth, int alpha, int beta) {
         if (board.isOver()) {
             if (board.getTurn().equals(Disc.RED)) {
                 return 1000 - depth;
@@ -109,18 +109,30 @@ public class Board {
         if (board.getTurn().equals(Disc.YELLOW)) {
             int bestvalue = -2000;
             for (Board next: nextMoves) {
-                int value = minimax(next, depth + 1);
+                int value = minimax(next, depth + 1, alpha, beta);
                 if (value > bestvalue) {
                     bestvalue = value;
+                }
+                if (bestvalue > alpha) {
+                    alpha = bestvalue;
+                }
+                if (beta <= alpha) {
+                    break;
                 }
             }
             return bestvalue;
         } else {
             int bestvalue = 2000;
             for (Board next: nextMoves) {
-                int value = minimax(next, depth + 1);
+                int value = minimax(next, depth + 1, alpha, beta);
                 if (value < bestvalue) {
                     bestvalue = value;
+                }
+                if (bestvalue < alpha) {
+                    alpha = bestvalue;
+                }
+                if (beta <= alpha) {
+                    break;
                 }
             }
             return bestvalue;
