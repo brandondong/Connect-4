@@ -9,7 +9,7 @@ import java.util.Set;
  * Created by Brandon on 2015-08-12.
  */
 public class Board {
-    private static final int MAX_DEPTH = 6;
+    private static final int MAX_DEPTH = 5;
 
     private Disc[][] discs;
     private Disc turn;
@@ -128,8 +128,8 @@ public class Board {
                 if (value < bestvalue) {
                     bestvalue = value;
                 }
-                if (bestvalue < alpha) {
-                    alpha = bestvalue;
+                if (bestvalue < beta) {
+                    beta = bestvalue;
                 }
                 if (beta <= alpha) {
                     break;
