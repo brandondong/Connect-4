@@ -10,8 +10,6 @@ import java.awt.event.ActionListener;
  */
 public class App extends JFrame {
 
-    private static final int SPACING = 64;
-
     private Game game;
 
     public App() {
